@@ -1,11 +1,12 @@
 # Actions-OpenWrt
+- Fork From [quanjindeng's Actions_OpenWrt-Amlogic](https://github.com/quanjindeng/Actions_OpenWrt-Amlogic)
 利用Actions云编译，整合了Amlogic平台的盒子OpenWrt固件编译与内核打包方法，一键生成可直接使用的固件。
 所有盒子固件均采用同一底包，默认为打包N1盒子的固件，如需打包其他型号盒子参照flippy的打包脚本说明修改.yml流程文件即可。
 
 ## 资源
-[内核地址](https://github.com/ophub/kernel/tree/main/pub/stable)
-[打包源码](https://github.com/unifreq/openwrt_packit)
-[内核编译](https://github.com/ophub/amlogic-s9xxx-armbian/tree/main/compile-kernel)
+- [内核地址](https://github.com/ophub/kernel/tree/main/pub/stable)
+- [打包源码](https://github.com/unifreq/openwrt_packit)
+- [内核编译](https://github.com/ophub/amlogic-s9xxx-armbian/tree/main/compile-kernel)
 
 ## 感谢
 - [Lean's OpenWrt源码仓库](https://github.com/coolsnowwolf/lede)
