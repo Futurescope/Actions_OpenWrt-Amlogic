@@ -70,10 +70,13 @@ jobs:
         chmod +x $DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
+
     - name: 更新feeds
       run: cd openwrt && ./scripts/feeds update -a
+
     - name: 安装feeds
       run: cd openwrt && ./scripts/feeds install -a
+
     - name: 加载自定义配置
       run: |
         [ -e files ] && mv files openwrt/files
@@ -81,9 +84,11 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
-    - name: find config
-      run: |
-        cd openwrt
-        make defconfig
-        cd .. && pwd && ls -a
-        cd openwrt && pwd && ls -a
+
+    - name: 输出config文件
+      uses: actions/upload-artifact@v3
+      with:
+        path: |
+          openwrt/.config
+          openwrt/.config.old
+          openwrt/feeds.conf.default
