@@ -5,12 +5,12 @@ on:
   workflow_dispatch:
 
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
   DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part2.sh
+  DIY_P2_SH: diy-part2-imm.sh
   TZ: Asia/Shanghai
 
 jobs:
@@ -84,11 +84,23 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
+        make defconfig
 
-    - name: 输出config文件
+    - name: 列出config
+      run: |
+        cd /workdir/openwrt
+        pwd && ls -ahil      
+        # mv .config /home/runner/work/Actions_OpenWrt-Amlogic/Actions_OpenWrt-Amlogic/config
+        # mv config.old /home/runner/work/Actions_OpenWrt-Amlogic/Actions_OpenWrt-Amlogic/config.old
+
+    - name: 上传config
       uses: actions/upload-artifact@v3
       with:
-        path: |
-          openwrt/.config
-          openwrt/.config.old
-          openwrt/feeds.conf.default
+        name: config
+        path: /workdir/openwrt/.config
+
+    - name: 上传config.old
+      uses: actions/upload-artifact@v3
+      with:
+        name: config old
+        path: /workdir/openwrt/.config.old
