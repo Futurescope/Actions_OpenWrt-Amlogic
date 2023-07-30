@@ -40,7 +40,7 @@ sed -i 's/invalid users = root/#invalid users = root/g' feeds/packages/net/samba
 # 拉取软件包
 
 # git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
-git clone https://github.com/kenzok8/small-package package/small-package
+# git clone https://github.com/kenzok8/small-package package/small-package
 # git clone -b luci https://github.com/pexcn/openwrt-chinadns-ng.git package/luci-app-chinadns-ng
 # svn co https://github.com/immortalwrt-collections/openwrt-gowebdav/trunk/luci-app-gowebdav package/luci-app-gowebdav
 # svn co https://github.com/immortalwrt-collections/openwrt-gowebdav/trunk/gowebdav package/gowebdav
@@ -49,12 +49,14 @@ git clone https://github.com/kenzok8/small-package package/small-package
 # git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
 # svn co https://github.com/kiddin9/openwrt-packages/trunk/UnblockNeteaseMusic-Go package/UnblockNeteaseMusic-Go
 # svn co https://github.com/kiddin9/openwrt-packages/trunk/luci-app-unblockneteasemusic-go package/luci-app-unblockneteasemusic-go
+rm -rf ./feeds/luci/applications/luci-app-netdata/  
+git clone https://kgithub.com/Jason6111/luci-app-netdata ./feeds/luci/applications/luci-app-netdata/
 
 
 # 删除重复包
 
 # rm -rf feeds/luci/applications/luci-app-netdata
-rm -rf feeds/luci/themes/luci-theme-argon
+# rm -rf feeds/luci/themes/luci-theme-argon
 # rm -rf package/small-package/luci-app-openvpn-server
 # rm -rf package/small-package/openvpn-easy-rsa-whisky
 # rm -rf package/small-package/luci-app-wrtbwmon
@@ -65,9 +67,8 @@ rm -rf feeds/luci/themes/luci-theme-argon
 # rm -rf package/small-package/luci-theme-argon*
 # rm -rf package/small-package/luci-app-amlogic
 # rm -rf package/small-package/luci-app-unblockneteasemusic
-rm -rf package/small-package/firewall*
 rm -rf package/small-package/opkg
-rm -rf package/lean/luci-app-argon-config
+# rm -rf package/lean/luci-app-argon-config
 # 
 # # 编译问题
 # rm -rf package/small-package/upx
@@ -75,14 +76,14 @@ rm -rf package/lean/luci-app-argon-config
 # rm -rf package/small-package/firewall*
 
 # 其他调整
-NAME=$"package/luci-app-unblockneteasemusic/root/usr/share/unblockneteasemusic" && mkdir -p $NAME/core
-curl 'https://api.github.com/repos/UnblockNeteaseMusic/server/commits?sha=enhanced&path=precompiled' -o commits.json
-echo "$(grep sha commits.json | sed -n "1,1p" | cut -c 13-52)">"$NAME/core_local_ver"
-curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/precompiled/app.js -o $NAME/core/app.js
-curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/precompiled/bridge.js -o $NAME/core/bridge.js
-curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/ca.crt -o $NAME/core/ca.crt
-curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.crt -o $NAME/core/server.crt
-curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.key -o $NAME/core/server.key
+# NAME=$"package/luci-app-unblockneteasemusic/root/usr/share/unblockneteasemusic" && mkdir -p $NAME/core
+# curl 'https://api.github.com/repos/UnblockNeteaseMusic/server/commits?sha=enhanced&path=precompiled' -o commits.json
+# echo "$(grep sha commits.json | sed -n "1,1p" | cut -c 13-52)">"$NAME/core_local_ver"
+# curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/precompiled/app.js -o $NAME/core/app.js
+# curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/precompiled/bridge.js -o $NAME/core/bridge.js
+# curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/ca.crt -o $NAME/core/ca.crt
+# curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.crt -o $NAME/core/server.crt
+# curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.key -o $NAME/core/server.key
 
 sed -i 's#https://github.com/breakings/OpenWrt#https://github.com/quanjindeng/Actions_OpenWrt-Amlogic#g' package/luci-app-amlogic/luci-app-amlogic/root/etc/config/amlogic
 sed -i 's#ARMv8#openwrt_armvirt_v8#g' package/luci-app-amlogic/luci-app-amlogic/root/etc/config/amlogic
