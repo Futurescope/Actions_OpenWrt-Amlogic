@@ -65,6 +65,8 @@ rm -rf feeds/luci/themes/luci-theme-argon
 # rm -rf package/small-package/luci-theme-argon*
 # rm -rf package/small-package/luci-app-amlogic
 # rm -rf package/small-package/luci-app-unblockneteasemusic
+rm -rf package/small-package/firewall*
+rm -rf package/small-package/opkg
 rm -rf package/lean/luci-app-argon-config
 # 
 # # 编译问题
