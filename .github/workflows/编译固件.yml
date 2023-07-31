@@ -91,6 +91,12 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
+        
+    - name: 上传menuconfig
+      uses: actions/upload-artifact@v3
+      with:
+        name: config
+        path: /workdir/openwrt/.config
 
     - name: 下载软件包
       id: package
