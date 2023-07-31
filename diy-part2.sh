@@ -43,11 +43,10 @@ sed -i 's/invalid users = root/#invalid users = root/g' feeds/packages/net/samba
 # svn co https://github.com/kiddin9/openwrt-packages/trunk/UnblockNeteaseMusic-Go package/openwrt-packages
 # 更换netdata为汉化版
 rm -rf ./feeds/luci/applications/luci-app-netdata/
-git clone https://kgithub.com/Jason6111/luci-app-netdata ./feeds/luci/applications/luci-app-netdata/
+git clone https://github.com/Jason6111/luci-app-netdata ./feeds/luci/applications/luci-app-netdata/
 # 添加其他软件
-git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
+svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
 svn co https://github.com/nantayo/passwall/trunk package/passwall
-svn co https://github.com/ophub/luci-app-amlogic/trunk package/amlogic
 
 # 删除重复包
 
