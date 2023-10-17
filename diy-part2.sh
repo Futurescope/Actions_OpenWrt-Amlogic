@@ -68,6 +68,7 @@ svn co https://github.com/nantayo/passwall/trunk package/passwall
 # rm -rf package/small-package/upx
 # rm -rf package/small-package/upx-static
 # rm -rf package/small-package/firewall*
+rm -rf package/small-package/miniupnpd-iptables
 
 # 其他调整
 # NAME=$"package/luci-app-unblockneteasemusic/root/usr/share/unblockneteasemusic" && mkdir -p $NAME/core
