@@ -34,60 +34,38 @@ sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generat
 # Replace the default software source
 # sed -i 's#openwrt.proxy.ustclug.org#mirrors.bfsu.edu.cn\\/openwrt#' package/lean/default-settings/files/zzz-default-settings
 
-sed -i 's/invalid users = root/#invalid users = root/g' feeds/packages/net/samba4/files/smb.conf.template
+# sed -i 's/invalid users = root/#invalid users = root/g' feeds/packages/net/samba4/files/smb.conf.template
 
+# 修复部分插件自启动脚本丢失可执行权限问题
+sed -i '/exit 0/i\chmod +x /etc/init.d/*' package/lean/default-settings/files/zzz-default-settings
 
 # 拉取软件包
 
 # git clone https://github.com/kenzok8/small-package package/small-package
-# svn co https://github.com/kiddin9/openwrt-packages/trunk/UnblockNeteaseMusic-Go package/openwrt-packages
 # 更换netdata为汉化版
 rm -rf ./feeds/luci/applications/luci-app-netdata/
 git clone https://github.com/Jason6111/luci-app-netdata ./feeds/luci/applications/luci-app-netdata
 git clone https://github.com/kongfl888/luci-app-adguardhome.git package/luci-app-adguardhome
 git clone https://github.com/sirpdboy/luci-app-autotimeset package/luci-app-autotimeset
+git clone https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
 svn co https://github.com/esirplayground/luci-app-poweroff package/luci-app-poweroff
 svn co https://github.com/kenzok8/small-package/tree/main/luci-app-shortcutmenu package/luci-app-shortcutmenu
 svn co https://github.com/sundaqiang/openwrt-packages/trunk/luci-app-wolplus package/luci-app-wolplus
 git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
 
-# passwall
-git clone https://github.com/xiaorouji/openwrt-passwall.git  package/luci-app-passwall
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/brook package/brook
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/chinadns-ng package/chinadns-ng
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/dns2socks package/dns2socks
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/dns2tcp package/dns2tcp
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/gn package/gn
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/hysteria package/hysteria
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/ipt2socks package/ipt2socks
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/microsocks package/microsocks
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/naiveproxy package/naiveproxy
-#svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/pdnsd-alt package/pdnsd-alt #与lean重复feeds/packages/net
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/shadowsocks-rust package/shadowsocks-rust
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/shadowsocksr-libev package/shadowsocksr-libev
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/simple-obfs package/simple-obfs
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/sing-box package/sing-box
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/ssocks package/ssocks
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/tcping package/tcping
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/trojan-go package/trojan-go
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/trojan-plus package/trojan-plus
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/trojan package/trojan
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/tuic-client package/tuic-client
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/v2ray-core package/v2ray-core
-#cp -rf $GITHUB_WORKSPACE/general/v2ray-core package/v2ray-core
-#svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/v2ray-geodata package/v2ray-geodata #与lean重复feeds/packages/net
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/v2ray-plugin package/v2ray-plugin
-#cp -rf $GITHUB_WORKSPACE/general/v2ray-plugin package/v2ray-plugin
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/xray-core package/xray-core
-svn co https://github.com/xiaorouji/openwrt-passwall-packages/trunk/xray-plugin package/xray-plugin
+#　git clone https://github.com/linkease/istore-ui.git package/istore-ui
+#　git clone https://github.com/linkease/istore.git package/istore
+#　sed -i 's/luci-lib-ipkg/luci-base/g' package/istore/luci/luci-app-store/Makefile
 
 # 删除重复包
 
-# rm -rf feeds/luci/applications/luci-app-netdata
 # rm -rf feeds/luci/themes/luci-theme-argon
 # 
 # # 编译问题
 # rm -rf package/small-package/upx
+
+# 添加主题
+svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy package/luci-theme-rosy
 
 # 其他调整
 # NAME=$"package/luci-app-unblockneteasemusic/root/usr/share/unblockneteasemusic" && mkdir -p $NAME/core
@@ -111,8 +89,4 @@ sed -i "s|ARMv8|openwrt_N1|g" package/luci-app-amlogic/root/etc/config/amlogic
 # 4.Set the download path of the kernel in your github.com repository（OpenWrt 内核的下载路径）
 sed -i "s|opt/kernel|https://github.com/breakings/OpenWrt|g" package/luci-app-amlogic/root/etc/config/amlogic
 
-
 sed -i 's#mount -t cifs#mount.cifs#g' feeds/luci/applications/luci-app-cifs-mount/root/etc/init.d/cifs
-
-#sed -i 's#<%+cbi/tabmenu%>##g' package/small-packages/luci-app-nginx-manager/luasrc/view/nginx-manager/index.htm
-
