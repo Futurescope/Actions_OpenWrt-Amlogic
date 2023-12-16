@@ -6,7 +6,7 @@
 # See /LICENSE for more information.
 #
 # https://github.com/P3TERX/Actions-OpenWrt
-# File name: diy-part2-imm.sh
+# File name: diy-part2_x86.sh
 # Description: OpenWrt DIY script part 2 (After Update feeds)
 #
 
@@ -23,8 +23,8 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' ./feeds/luci/collections/luci
 # sed -i 's/TARGET_rockchip/TARGET_rockchip\|\|TARGET_armvirt/g' package/lean/autocore/Makefile
 
 # Set etc/openwrt_release
-sed -i "s|DISTRIB_REVISION='.*'|DISTRIB_REVISION='R$(date +%Y.%m.%d)'|g" package/base-files/files/etc/openwrt_release
-echo "DISTRIB_SOURCECODE='immortalwrt'" >>package/base-files/files/etc/openwrt_release
+# sed -i "s|DISTRIB_REVISION='.*'|DISTRIB_REVISION='R$(date +%Y.%m.%d)'|g" package/base-files/files/etc/openwrt_release
+# echo "DISTRIB_SOURCECODE='immortalwrt'" >>package/base-files/files/etc/openwrt_release
 
 # Set DISTRIB_REVISION
 sed -i "s/OpenWrt /Futurescope Build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" package/lean/default-settings/files/zzz-default-settings
@@ -33,7 +33,7 @@ sed -i "s/OpenWrt /Futurescope Build $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" 
 sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
 
 # Modify system hostname（FROM OpenWrt CHANGE TO Immortalwrt-N1）
-sed -i 's/OpenWrt/Immortalwrt-N1/g' package/base-files/files/bin/config_generate
+# sed -i 's/OpenWrt/Immortalwrt-N1/g' package/base-files/files/bin/config_generate
 
 # Replace the default software source
 # sed -i 's#openwrt.proxy.ustclug.org#mirrors.bfsu.edu.cn\\/openwrt#' package/lean/default-settings/files/zzz-default-settings
@@ -108,17 +108,5 @@ svn co https://github.com/rosywrt/luci-theme-rosy/trunk/luci-theme-rosy package/
 # curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/ca.crt -o $NAME/core/ca.crt
 # curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.crt -o $NAME/core/server.crt
 # curl -L https://github.com/UnblockNeteaseMusic/server/raw/enhanced/server.key -o $NAME/core/server.key
-
-# Amlogic
-svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
-# Modify the default configuration of Amlogic Box
-# 1.Set the download repository of the OpenWrt files to your github.com（OpenWrt 文件的下载仓库）
-sed -i "s|https.*/OpenWrt|https://github.com/Futurescope/Actions_OpenWrt-Amlogic|g" package/luci-app-amlogic/root/etc/config/amlogic
-# 2.Set the keywords of Tags in your github.com Releases（Releases 里 Tags 的关键字）
-sed -i "s|ARMv8|openwrt_N1|g" package/luci-app-amlogic/root/etc/config/amlogic
-# 3.Set the suffix of the OPENWRT files in your github.com Releases（Releases 里 OpenWrt 文件的后缀）
-#sed -i "s|.img.gz|_Full.img.gz|g" package/luci-app-amlogic/root/etc/config/amlogic
-# 4.Set the download path of the kernel in your github.com repository（OpenWrt 内核的下载路径）
-sed -i "s|opt/kernel|https://github.com/breakings/OpenWrt|g" package/luci-app-amlogic/root/etc/config/amlogic
 
 sed -i 's#mount -t cifs#mount.cifs#g' feeds/luci/applications/luci-app-cifs-mount/root/etc/init.d/cifs
