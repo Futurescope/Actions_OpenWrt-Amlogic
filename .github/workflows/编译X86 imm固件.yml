@@ -1,20 +1,21 @@
-name: 编译imm固件
+name: 编译X86 imm固件.yml
 
 on:
   repository_dispatch:
   workflow_dispatch:
 
   schedule:
-    - cron: 0 16 * * 4
+    - cron: 0 16 * * 5
 
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: .config
+  CONFIG_FILE: x86config
   DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part2-imm.sh
+  DIY_P2_SH: diy-part2_x86.sh
   TZ: Asia/Shanghai
+  DEVICE_ARCH: x86_64
 
 jobs:
   build:
@@ -66,6 +67,13 @@ jobs:
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH --single-branch --depth=1 openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+
+    - name: 缓存加速
+      uses: klever1988/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        mixkey: ${{ env.DEVICE_ARCH }}
+        prefix: ${{ github.workspace }}/openwrt
 
     - name: 加载自定义feeds
       run: |
@@ -119,41 +127,30 @@ jobs:
       run: |
         echo "清理之前："
         df -hT
-        mkdir openwrt-armvirt
-        mv openwrt/bin/targets/*/*/*.tar.gz openwrt-armvirt/
-        echo -e "\n"
-        echo "列出空间占用前10的目录或文件："
-        sudo du -h --max-depth=1 /workdir/openwrt |sort -nr | head -10
-        rm -rf /workdir/openwrt/*
-        echo -e "\n"
-        echo "清理之后："
-        df -hT
-        echo -e "\n"
-        echo "当前路径文件"
-        ls -l
         echo -e "\n"
         echo "列出空间占用前10的目录或文件："
         sudo du -h --max-depth=1 /workdir/openwrt |sort -nr | head -10
 
-    - name: 打包内核
-      uses: unifreq/openwrt_packit@master
-      env:
-        WHOAMI: futuroscope
-        OPENWRT_ARMVIRT: openwrt-armvirt/*.tar.gz
-        PACKAGE_SOC: s905d
-        # KERNEL_AUTO_LATEST: false
-        # KERNEL_REPO_URL: https://github.com/ophub/kernel/tree/main/pub/stable
-        KERNEL_VERSION_NAME: 5.15.106
+    - name: 整理输出
+      id: organize
+      if: (!cancelled())
+      run: |
+        mkdir openwrt-firmware
+        mv openwrt/bin/targets/*/*/*.tar.gz openwrt-firmware/
+        cd openwrt-firmware
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "status=success" >> $GITHUB_OUTPUT
 
     - name: 发布固件
       uses: ncipollo/release-action@v1
+      if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        tag: openwrt_N1_${{ env.PACKAGED_OUTPUTDATE }}
-        artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*
+        tag: openwrt_X86_${{ env.FILE_DATE }}
+        artifacts: ${{ env.FIRMWARE }}/*
         allowUpdates: true
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
-          自定义固件编译完成！
+          自定义X86_Immortalwrt固件编译完成！
           
     - name: 清理Actions空间
       uses: Mattraks/delete-workflow-runs@main
@@ -171,5 +168,6 @@ jobs:
         keep_latest: 5
         #keep_latest: ${{ github.event.inputs.rele }}
         delete_tags: true
+        delete_tag_pattern: ^openwrt_X86_\d+(\.\d+)+$
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -58,7 +58,9 @@ git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.gi
 #　sed -i 's/luci-lib-ipkg/luci-base/g' package/istore/luci/luci-app-store/Makefile
 
 # 删除重复包
-
+# passwall
+rm -rf feeds/packages/net/pdnsd-alt
+rm -rf feeds/packages/net/v2ray-geodata
 # rm -rf feeds/luci/themes/luci-theme-argon
 # 
 # # 编译问题
