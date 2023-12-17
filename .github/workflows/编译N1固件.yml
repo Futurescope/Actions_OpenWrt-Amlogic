@@ -131,6 +131,17 @@ jobs:
       run: |
         echo "清理之前："
         df -hT
+        echo "--------------"
+        ls -l
+        echo "--------------"
+        ls -l openwrt
+        echo "--------------"
+        ls -l openwrt/bin
+        echo "--------------"
+        ls -l openwrt/bin/targets
+        echo "--------------"
+        ls -l openwrt/bin/targets/*/*/
+        echo "--------------"
         mkdir openwrt-armvirt
         mv openwrt/bin/targets/*/*/*.tar.gz openwrt-armvirt/
         echo -e "\n"
