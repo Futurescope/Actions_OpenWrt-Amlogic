@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: 0 16 * * 5
+    - cron: 0 20 * * 5
 
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt
@@ -136,7 +136,7 @@ jobs:
       if: (!cancelled())
       run: |
         mkdir openwrt-firmware
-        mv openwrt/bin/targets/*/*/*.tar.gz openwrt-firmware/
+        mv openwrt/bin/targets/*/*/* openwrt-firmware/
         cd openwrt-firmware
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT

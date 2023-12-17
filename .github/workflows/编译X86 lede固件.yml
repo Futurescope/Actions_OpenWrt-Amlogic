@@ -137,7 +137,7 @@ jobs:
       run: |
         mkdir openwrt-firmware
         ls -l openwrt/bin/targets/*/*/
-        mv openwrt/bin/targets/*/*/*.tar.gz openwrt-firmware/
+        mv openwrt/bin/targets/*/*/* openwrt-firmware/
         cd openwrt-firmware
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT

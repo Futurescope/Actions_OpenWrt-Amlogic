@@ -52,7 +52,7 @@ git clone https://github.com/kongfl888/luci-app-adguardhome.git package/luci-app
 git clone https://github.com/sirpdboy/luci-app-autotimeset package/luci-app-autotimeset
 git clone https://github.com/sbwml/luci-app-mosdns package/luci-app-mosdns
 svn co https://github.com/esirplayground/luci-app-poweroff package/luci-app-poweroff
-svn co https://github.com/kenzok8/small-package/tree/main/luci-app-shortcutmenu package/luci-app-shortcutmenu
+svn co https://github.com/doushang/luci-app-shortcutmenu/trunk/luci-app-shortcutmenu package/luci-app-shortcutmenu
 svn co https://github.com/sundaqiang/openwrt-packages/trunk/luci-app-wolplus package/luci-app-wolplus
 git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
 
@@ -65,8 +65,10 @@ git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.gi
 # 删除重复包
 # passwall
 rm -rf feeds/passwall_packages/pdnsd-alt #与lean重复
-rm -rf feeds/packages/net/v2ray-geodata
-mv -r feeds/passwall_packages/v2ray-geodata feeds/packages/net/v2ray-geodata
+rm -rf feeds/packages/net/v2ray-geodata/*
+mv feeds/passwall_packages/v2ray-geodata/* feeds/packages/net/v2ray-geodata/
+rm -rf feeds/passwall_packages/v2ray-geodata
+
 # rm -rf feeds/luci/themes/luci-theme-argon
 # 
 # # 编译问题
