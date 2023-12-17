@@ -64,8 +64,9 @@ git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.gi
 
 # 删除重复包
 # passwall
-rm -rf feeds/packages/net/pdnsd-alt
+rm -rf feeds/passwall_packages/pdnsd-alt #与lean重复
 rm -rf feeds/packages/net/v2ray-geodata
+mv -r feeds/passwall_packages/v2ray-geodata feeds/packages/net/v2ray-geodata
 # rm -rf feeds/luci/themes/luci-theme-argon
 # 
 # # 编译问题
