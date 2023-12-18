@@ -65,7 +65,7 @@ jobs:
       working-directory: /workdir
       run: |
         df -hT $PWD
-        git clone $REPO_URL -b $REPO_BRANCH --single-branch --depth=1 openwrt
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: 缓存加速
@@ -120,7 +120,7 @@ jobs:
         echo "status=success" >> $GITHUB_OUTPUT
         grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
         [ -s DEVICE_NAME ] && echo "DEVICE_NAME=_$(cat DEVICE_NAME)" >> $GITHUB_ENV
-        echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+        echo "FILE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
     - name: 清理磁盘空间
       if: (!cancelled())
@@ -136,7 +136,9 @@ jobs:
       if: (!cancelled())
       run: |
         mkdir openwrt-firmware
-        mv openwrt/bin/targets/*/*/* openwrt-firmware/
+        mv openwrt/bin/targets/*/*/*.bin openwrt-firmware/
+        mv openwrt/bin/targets/*/*/*.img.gz openwrt-firmware/
+        mv openwrt/bin/targets/*/*/profiles.json openwrt-firmware/
         cd openwrt-firmware
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
@@ -145,7 +147,7 @@ jobs:
       uses: ncipollo/release-action@v1
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        tag: openwrt_X86_${{ env.FILE_DATE }}
+        tag: openwrt_X86_Imm_${{ env.FILE_DATE }}
         artifacts: ${{ env.FIRMWARE }}/*
         allowUpdates: true
         token: ${{ secrets.GITHUB_TOKEN }}
@@ -168,6 +170,6 @@ jobs:
         keep_latest: 5
         #keep_latest: ${{ github.event.inputs.rele }}
         delete_tags: true
-        delete_tag_pattern: ^openwrt_X86_\d+(\.\d+)+$
+        delete_tag_pattern: ^openwrt_X86_Imm_.*$
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
