@@ -1,0 +1,29 @@
+
+config interface 'loopback'
+	option ifname 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config globals 'globals'
+
+config interface 'lan'
+	option proto 'static'
+	option ipaddr '192.168.2.1'
+	option netmask '255.255.255.0'
+	option force_link '0'
+	option delegate '0'
+	option ip6assign '64'
+	option type 'bridge'
+	option _orig_ifname 'eth0'
+	option _orig_bridge 'true'
+	option type 'bridge'
+	option ifname 'eth1 eth2 eht3'
+	option gateway '192.168.2.1'
+
+	option ip6assign '64'
+	option ip6assign '64'
+
+config interface 'wan'
+	option proto 'dhcp'
+	option ifname 'eth0'
