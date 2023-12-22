@@ -1,0 +1,139 @@
+
+config smartdns
+	option server_name 'smartdns'
+	option port '53'
+	option auto_set_dnsmasq '1'
+	option tcp_server '1'
+	option ipv6_server '1'
+	option bind_device '1'
+	option dualstack_ip_selection '1'
+	option serve_expired '1'
+	option cache_size '100000'
+	option cache_persist '1'
+	option resolve_local_hostnames '1'
+	option force_https_soa '1'
+	option rr_ttl_min '600'
+	option seconddns_port '6553'
+	option seconddns_tcp_server '1'
+	option seconddns_enabled '1'
+	option seconddns_server_group 'Overseas'
+	option seconddns_no_speed_check '1'
+	option seconddns_no_rule_addr '1'
+	option seconddns_no_dualstack_selection '1'
+	option seconddns_no_cache '1'
+	option enabled '1'
+	option seconddns_server_flags '-exclude-default-group'
+	option old_port '53'
+	option old_enabled '1'
+	option old_auto_set_dnsmasq '1'
+
+config domain-rule
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option name 'ali'
+	option ip '223.5.5.5'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option name 'ali2'
+	option ip '223.6.6.6'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option name 'tencent'
+	option ip '119.29.29.29'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option name 'baidu'
+	option ip '180.76.76.76'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option name 'huawei'
+	option ip '112.112.208.1'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option name '114'
+	option ip '114.114.114.114'
+
+config server
+	option enabled '1'
+	option name 'ali_tls'
+	option ip 'aliDNS_ip/DNS-query'
+	option type 'https'
+
+config server
+	option enabled '1'
+	option name 'tencent_tls'
+	option ip 'doh.pub/DNS-query'
+	option type 'https'
+
+config server
+	option enabled '1'
+	option name 'tencent_tls2'
+	option ip 'sm2.doh.pub/DNS-query'
+	option type 'https'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option name 'dnspai'
+	option ip '123.125.81.6'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option name 'Google'
+	option ip '8.8.8.8'
+	option server_group 'Overseas'
+	option exclude_default_group '1'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option name 'Google2'
+	option ip '8.8.4.4'
+	option server_group 'Overseas'
+	option exclude_default_group '1'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option name 'CloudFlare'
+	option ip '1.1.1.1'
+	option server_group 'Overseas'
+	option exclude_default_group '1'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option name 'DnsWatch'
+	option ip '84.200.69.80'
+	option server_group 'Overseas'
+	option exclude_default_group '1'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option name 'ComodoDns'
+	option ip '8.26.56.26'
+	option server_group 'Overseas'
+	option exclude_default_group '1'
+
+config server
+	option enabled '1'
+	option type 'udp'
+	option name 'Verisign'
+	option ip '64.6.64.6'
+	option server_group 'Overseas'
+	option exclude_default_group '1'
+
